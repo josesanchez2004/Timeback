@@ -1,378 +1,1104 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TIMEBACK — Give your business time back</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --red:#D52B1E;
-    --red-deep:#9E1B10;
-    --white:#FFFFFF;
-    --ink:#15100F;
-    --line:rgba(17,16,15,.12);
-    box-sizing:border-box;
-    padding-top:env(safe-area-inset-top,0px);
-    padding-bottom:env(safe-area-inset-bottom,0px);
-  }
-  html{scroll-padding-top:env(safe-area-inset-top,0px);}
-  *{box-sizing:border-box;}
-  body{
-    margin:0;background:var(--white);color:var(--ink);
-    font-family:'Space Grotesk',sans-serif;-webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
-  }
-  a{color:inherit;text-decoration:none;}
-  button{font-family:inherit;cursor:pointer;}
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>TIMEBACK — Give your business time back</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --red: #d52b1e;
+        --red-deep: #9e1b10;
+        --white: #ffffff;
+        --ink: #15100f;
+        --line: rgba(17, 16, 15, 0.12);
+        box-sizing: border-box;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      html {
+        scroll-padding-top: env(safe-area-inset-top, 0px);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--white);
+        color: var(--ink);
+        font-family: "Space Grotesk", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      button {
+        font-family: inherit;
+        cursor: pointer;
+      }
 
-  header{
-    position:sticky;top:env(safe-area-inset-top,0px);
-    display:flex;align-items:center;justify-content:space-between;
-    padding:18px 6vw;background:rgba(255,255,255,.85);backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line);z-index:20;
-  }
-  .logo{display:flex;align-items:center;gap:9px;font-weight:700;font-size:1.25rem;letter-spacing:-.01em;}
-  .leaf{width:14px;height:14px;background:var(--red);
-    clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);}
-  nav{display:none;gap:2.2rem;font-size:.92rem;font-weight:500;}
-  @media(min-width:760px){nav{display:flex;}}
-  nav a{opacity:.7;transition:opacity .15s;}
-  nav a:hover{opacity:1;color:var(--red);}
-  .cta{background:var(--red);color:var(--white);padding:.7rem 1.4rem;border:none;font-weight:600;font-size:.9rem;transition:transform .15s,background .15s;}
-  .cta:hover{background:var(--red-deep);transform:translateY(-1px);}
-
-  .hero{position:relative;overflow:hidden;padding-bottom:2vh;}
-  .redfield{
-    position:absolute;top:-30vw;right:-22vw;width:70vw;height:70vw;
-    border-radius:50%;background:var(--red);
-    filter:blur(0px);
-  }
-  .ring{
-    position:absolute;border:1.5px solid rgba(225,29,46,.35);border-radius:50%;
-  }
-  .ring1{top:-8vw;right:-8vw;width:34vw;height:34vw;}
-  .ring2{top:2vw;right:6vw;width:20vw;height:20vw;}
-
-  .heroinner{
-    position:relative;z-index:1;max-width:1280px;margin:0 auto;
-    padding:12vh 6vw 8vh;
-  }
-  .kicker{
-    display:inline-flex;align-items:center;gap:.5rem;
-    font-family:'JetBrains Mono';font-size:.78rem;font-weight:500;
-    color:var(--red);border:1px solid var(--red);padding:.3rem .65rem;margin-bottom:1.6rem;
-  }
-  .kicker::before{content:"";width:6px;height:6px;background:var(--red);border-radius:50%;
-    animation:pulse 1.8s ease-in-out infinite;}
-  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.25;}}
-
-  h1{
-    font-weight:700;font-size:clamp(2.9rem,8.4vw,6.4rem);
-    line-height:.96;letter-spacing:-.03em;margin:0 0 1.6rem;max-width:14ch;
-  }
-  h1 em{color:var(--red);font-style:normal;position:relative;}
-
-  .sub{font-size:clamp(1.05rem,1.6vw,1.3rem);line-height:1.6;color:#3a332f;max-width:46ch;margin:0 0 2.4rem;}
-  .herobtns{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:6vh;}
-  .ghost{padding:.7rem 1.4rem;border:1.5px solid var(--ink);font-weight:600;font-size:.9rem;background:transparent;transition:border-color .15s,color .15s;}
-  .ghost:hover{border-color:var(--red);color:var(--red);}
-
-  /* orbit visual */
-  .orbitwrap{display:flex;justify-content:center;padding:2vh 0 0;}
-  svg#orbit{width:min(420px,88vw);height:auto;overflow:visible;
-    opacity:0;transform:scale(.92);animation:orbitIn .8s ease-out .1s forwards;}
-  @keyframes orbitIn{to{opacity:1;transform:scale(1);}}
-  .orbitring{fill:none;stroke:rgba(21,16,15,.12);stroke-width:1.2;}
-  .node{fill:var(--red);filter:drop-shadow(0 0 3px rgba(213,43,30,.6));animation:nodePulse 2.6s ease-in-out infinite;}
-  .nodeline{stroke:rgba(225,29,46,.4);stroke-width:1.2;}
-  .spin-slow{transform-origin:210px 210px;animation:spin 26s linear infinite;}
-  .spin-slow-rev{transform-origin:210px 210px;animation:spin 34s linear infinite reverse;}
-  @keyframes spin{to{transform:rotate(360deg);}}
-  @keyframes nodePulse{0%,100%{opacity:1;}50%{opacity:.35;}}
-  @media(prefers-reduced-motion:reduce){
-    .spin-slow,.spin-slow-rev,.node{animation:none;}
-    svg#orbit{opacity:1;transform:none;animation:none;}
-  }
-
-  .facering{fill:none;stroke:var(--ink);stroke-width:2.5;}
-  .bezel{fill:none;stroke:rgba(213,43,30,.55);stroke-width:1.6;stroke-linecap:round;
-    stroke-dasharray:2 10;transform-origin:210px 210px;
-    animation:spin 9s linear infinite;}
-  .tick{stroke:var(--ink);stroke-width:1.4;opacity:.55;}
-  .tickbig{stroke:var(--ink);stroke-width:2.2;opacity:.85;}
-  .facenum{font-family:'JetBrains Mono';font-size:13px;fill:var(--ink);opacity:.6;
-    text-anchor:middle;dominant-baseline:middle;}
-  .glass{fill:var(--white);opacity:.55;filter:blur(0px);}
-  .sweeparc{fill:none;stroke:var(--red);stroke-width:3.5;stroke-linecap:round;
-    transform-origin:210px 210px;
-    filter:drop-shadow(0 0 6px rgba(213,43,30,.7));
-    animation:rewindHr 2.8s cubic-bezier(.2,.7,.2,1) 1 both,
-              arcFade 2.8s ease-out 1 both;}
-  @keyframes arcFade{0%{opacity:0;}25%{opacity:1;}100%{opacity:.55;}}
-  .hand{stroke:var(--ink);stroke-linecap:round;}
-  .hand-min{stroke-width:3.4;}
-  .hand-hr{stroke-width:5;}
-  .pivot{fill:var(--red);filter:drop-shadow(0 0 7px rgba(213,43,30,.85));
-    animation:pivotPulse 2.4s ease-in-out infinite;animation-delay:2.8s;}
-  @keyframes pivotPulse{0%,100%{filter:drop-shadow(0 0 7px rgba(213,43,30,.75));}
-    50%{filter:drop-shadow(0 0 18px rgba(213,43,30,1));}}
-  @keyframes rewindHr{0%{transform:rotate(0deg);}70%{transform:rotate(-330deg);}100%{transform:rotate(-300deg);}}
-  @keyframes rewindMin{0%{transform:rotate(0deg);}70%{transform:rotate(-760deg);}100%{transform:rotate(-720deg);}}
-  .hand-hr{transform-origin:210px 210px;animation:rewindHr 2.8s cubic-bezier(.2,.7,.2,1) 1 both;}
-  .hand-min{transform-origin:210px 210px;animation:rewindMin 2.8s cubic-bezier(.2,.7,.2,1) 1 both;}
-  @media(prefers-reduced-motion:reduce){
-    .hand-hr,.hand-min,.pivot,.sweeparc{animation:none;}
-    .sweeparc{opacity:.4;}
-  }
-
-  .stats{
-    display:grid;grid-template-columns:repeat(3,1fr);
-    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-    max-width:1280px;margin:0 auto;position:relative;z-index:1;background:var(--white);
-  }
-  .stat{padding:2.6rem 5vw;border-left:1px solid var(--line);}
-  .stat:first-child{border-left:none;}
-  .stat b{display:block;font-family:'JetBrains Mono';font-weight:600;font-size:clamp(1.9rem,3.6vw,2.6rem);color:var(--red);line-height:1;margin-bottom:.4rem;}
-  .stat span{font-size:.88rem;color:#555;}
-
-  section.how{padding:10vh 6vw;max-width:1280px;margin:0 auto;}
-  .how .tag{font-family:'JetBrains Mono';font-size:.78rem;color:var(--red);margin-bottom:.8rem;}
-  .how h2{font-weight:700;font-size:clamp(2.1rem,4.6vw,3rem);margin:0 0 3.5rem;max-width:16ch;letter-spacing:-.02em;}
-  .steps{display:grid;gap:0;border-top:1px solid var(--line);}
-  @media(min-width:760px){.steps{grid-template-columns:repeat(3,1fr);}}
-  .step{padding:1.8rem 1.8rem 1.8rem 0;border-bottom:1px solid var(--line);}
-  @media(min-width:760px){.step{border-right:1px solid var(--line);border-bottom:none;padding:1.8rem;}
-    .step:last-child{border-right:none;}}
-  .step .idx{font-family:'JetBrains Mono';font-size:.78rem;color:var(--red);margin-bottom:.8rem;display:block;}
-  .step h3{font-size:1.15rem;margin:0 0 .5rem;font-weight:600;}
-  .step p{font-size:.93rem;color:#4a4a4a;line-height:1.6;margin:0;}
-
-  section.offers{padding:0 6vw 10vh;max-width:1280px;margin:0 auto;}
-  .offers .tag{font-family:'JetBrains Mono';font-size:.78rem;color:var(--red);margin-bottom:.8rem;}
-  .offers h2{font-weight:700;font-size:clamp(2.1rem,4.6vw,3rem);margin:0 0 3.5rem;max-width:20ch;letter-spacing:-.02em;}
-  .offergrid{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);}
-  @media(min-width:760px){.offergrid{grid-template-columns:repeat(3,1fr);}}
-  .offercard{background:var(--white);padding:2rem 1.8rem;}
-  .offercard h3{font-size:1.15rem;margin:0 0 .6rem;font-weight:600;}
-  .offercard p{font-size:.93rem;color:#4a4a4a;line-height:1.6;margin:0;}
-  .offercard .mark{width:9px;height:9px;background:var(--red);margin-bottom:1.1rem;}
-  .offercard.assess{
-    grid-column:1 / -1;background:var(--ink);color:var(--white);
-    display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.2rem;
-    padding:2rem 1.8rem;
-  }
-  .offercard.assess p{color:#c9c9c9;max-width:44ch;}
-  .offercard.assess .cta{background:var(--red);flex-shrink:0;}
-  .offercard.assess .cta:hover{background:var(--red-deep);}
-
-  section.pricing{padding:0 6vw 11vh;max-width:1280px;margin:0 auto;}
-  .pricing .tag{font-family:'JetBrains Mono';font-size:.78rem;color:var(--red);margin-bottom:.8rem;}
-  .pricing h2{font-weight:700;font-size:clamp(2.1rem,4.6vw,3rem);margin:0 0 1rem;max-width:16ch;letter-spacing:-.02em;}
-  .pricing .note{font-size:.98rem;color:#5a5a5a;max-width:52ch;margin:0 0 3rem;line-height:1.6;}
-  .pricelist{border-top:1px solid var(--line);}
-  .price-row{
-    display:flex;justify-content:space-between;align-items:baseline;gap:1.5rem;
-    padding:1.4rem 0;border-bottom:1px solid var(--line);
-  }
-  .price-row .plabel{font-weight:500;font-size:1rem;}
-  .price-row .pdesc{font-size:.85rem;color:#777;margin-top:.2rem;}
-  .price-row .pval{font-family:'JetBrains Mono';font-weight:600;color:var(--red);font-size:1.05rem;white-space:nowrap;text-align:right;}
-
-  .banner{background:var(--ink);color:var(--white);padding:7vh 6vw;position:relative;overflow:hidden;}
-  .banner::before{content:"";position:absolute;top:-20vw;left:-14vw;width:40vw;height:40vw;border-radius:50%;background:var(--red);opacity:.9;}
-  .banner .inner{position:relative;z-index:1;max-width:1280px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.6rem;}
-  .banner h2{font-weight:700;font-size:clamp(1.9rem,4vw,2.5rem);margin:0;max-width:20ch;letter-spacing:-.02em;}
-  .banner .cta{background:var(--white);color:var(--red);}
-  .banner .cta:hover{background:#f4f4f4;}
-
-  footer{
-    padding:2.2rem 6vw;display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;
-    font-family:'JetBrains Mono';font-size:.8rem;color:#666;border-top:1px solid var(--line);
-    max-width:1280px;margin:0 auto;
-  }
-
-  .reveal{opacity:0;transform:translateY(26px);
-    transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);}
-  .reveal.inview{opacity:1;transform:translateY(0);}
-  .stats .stat:nth-child(1){transition-delay:0s;}
-  .stats .stat:nth-child(2){transition-delay:.1s;}
-  .stats .stat:nth-child(3){transition-delay:.2s;}
-  .steps .step:nth-child(1){transition-delay:0s;}
-  .steps .step:nth-child(2){transition-delay:.12s;}
-  .steps .step:nth-child(3){transition-delay:.24s;}
-  .offergrid .offercard:nth-child(1){transition-delay:0s;}
-  .offergrid .offercard:nth-child(2){transition-delay:.1s;}
-  .offergrid .offercard:nth-child(3){transition-delay:.2s;}
-  .offergrid .offercard.assess{transition-delay:.3s;}
-  .pricelist .price-row:nth-child(1){transition-delay:0s;}
-  .pricelist .price-row:nth-child(2){transition-delay:.06s;}
-  .pricelist .price-row:nth-child(3){transition-delay:.12s;}
-  .pricelist .price-row:nth-child(4){transition-delay:.18s;}
-  .pricelist .price-row:nth-child(5){transition-delay:.24s;}
-  @media(prefers-reduced-motion:reduce){
-    .reveal{opacity:1;transform:none;transition:none;}
-  }
-</style>
-</head>
-<body>
-
-<header>
-  <div class="logo"><span class="leaf"></span>TIMEBACK</div>
-  <nav><a href="#how">How it works</a><a href="#pricing">Pricing</a></nav>
-  <button class="cta">Get started</button>
-</header>
-
-<section class="hero">
-  <div class="redfield"></div>
-  <div class="ring ring1"></div>
-  <div class="ring ring2"></div>
-  <div class="heroinner">
-    <h1>Give your business <em>time back.</em></h1>
-    <p class="sub">We build AI-powered automations that give small businesses their time back — so your team spends less time on admin and more time on what actually moves things forward.</p>
-    <div class="herobtns">
-      <button class="cta">Get started</button>
-      <button class="ghost">See how it works</button>
-    </div>
-
-    <div class="orbitwrap">
-      <svg id="orbit" viewBox="0 0 420 420">
-        <circle class="orbitring" cx="210" cy="210" r="180"/>
-        <circle class="orbitring" cx="210" cy="210" r="130"/>
-        <g class="spin-slow">
-          <circle class="node" cx="210" cy="30" r="5" style="animation-delay:.2s"/>
-          <circle class="node" cx="210" cy="390" r="4" style="animation-delay:1s"/>
-          <line class="nodeline" x1="210" y1="30" x2="210" y2="80"/>
-        </g>
-        <g class="spin-slow-rev">
-          <circle class="node" cx="80" cy="210" r="4" style="animation-delay:.6s"/>
-          <circle class="node" cx="340" cy="210" r="4.5" style="animation-delay:1.4s"/>
-        </g>
-        <circle class="facering" cx="210" cy="210" r="78"/>
-        <circle class="sweeparc" cx="210" cy="210" r="94" stroke-dasharray="492 590"/>
-        <g id="ticks"></g>
-        <line class="hand hand-min" x1="210" y1="210" x2="210" y2="148"/>
-        <line class="hand hand-hr" x1="210" y1="210" x2="210" y2="168"/>
-        <circle class="pivot" cx="210" cy="210" r="5.5"/>
-      </svg>
-    </div>
-  </div>
-</section>
-
-<div id="stats" class="stats">
-  <div class="stat reveal"><b>11.4</b><span>hours saved weekly, on average</span></div>
-  <div class="stat reveal"><b>60s</b><span>to connect your first workflow</span></div>
-  <div class="stat reveal"><b>100%</b><span>Canadian-hosted &amp; supported</span></div>
-</div>
-
-<section class="how" id="how">
-  <div class="tag">// how it works</div>
-  <h2>Less admin. More of what matters.</h2>
-  <div class="steps">
-    <div class="step reveal"><span class="idx">01</span><h3>Connect your tools</h3><p>Link the apps you already use for invoicing, scheduling, and customer records — no rebuild required.</p></div>
-    <div class="step reveal"><span class="idx">02</span><h3>Let AI handle the repeats</h3><p>Set the rules once. Our automations handle the follow-ups, reminders, and paperwork from there on.</p></div>
-    <div class="step reveal"><span class="idx">03</span><h3>Get your hours back</h3><p>See exactly how much time you've reclaimed each week, and put it toward growing the business.</p></div>
-  </div>
-</section>
-
-<section class="offers">
-  <div class="tag">// what we build</div>
-  <h2>Three ways we take work off your plate.</h2>
-  <div class="offergrid">
-    <div class="offercard reveal">
-      <div class="mark"></div>
-      <h3>Workflow Automation</h3>
-      <p>Automate repetitive processes across the tools your business already uses.</p>
-    </div>
-    <div class="offercard reveal">
-      <div class="mark"></div>
-      <h3>Document Intelligence</h3>
-      <p>Extract, organize, and process information from documents automatically using AI.</p>
-    </div>
-    <div class="offercard reveal">
-      <div class="mark"></div>
-      <h3>Intelligent Intake</h3>
-      <p>Automatically process emails, forms, and customer requests, and route them into the right workflow.</p>
-    </div>
-    <div class="offercard assess reveal">
-      <div>
-        <h3>Not sure where to start?</h3>
-        <p>Our Automation Assessment analyzes your workflows and identifies the highest-value opportunities for automation.</p>
-      </div>
-      <button class="cta">Book a free assessment</button>
-    </div>
-  </div>
-</section>
-
-<section class="pricing" id="pricing">
-  <div class="tag">// pricing</div>
-  <h2>Simple, honest pricing.</h2>
-  <p class="note">No packages to decode. We scope the work, tell you what it costs, and go from there.</p>
-  <div class="pricelist">
-    <div class="price-row reveal">
-      <div><div class="plabel">Automation Assessment</div><div class="pdesc">A working session to map your best opportunities</div></div>
-      <div class="pval">Free</div>
-    </div>
-    <div class="price-row reveal">
-      <div><div class="plabel">Simple workflow</div><div class="pdesc">A single automated process, start to finish</div></div>
-      <div class="pval">$250–500</div>
-    </div>
-    <div class="price-row reveal">
-      <div><div class="plabel">AI / document workflow</div><div class="pdesc">Document intelligence or intake, built and tested</div></div>
-      <div class="pval">$500–1,000</div>
-    </div>
-    <div class="price-row reveal">
-      <div><div class="plabel">Larger / custom workflow</div><div class="pdesc">Multi-step or multi-system automations</div></div>
-      <div class="pval">Custom quote</div>
-    </div>
-    <div class="price-row reveal">
-      <div><div class="plabel">Ongoing monitoring &amp; support</div><div class="pdesc">We keep it running so you don't have to</div></div>
-      <div class="pval">$50–150/mo</div>
-    </div>
-  </div>
-</section>
-
-<div class="banner">
-  <div class="inner">
-    <h2 class="reveal">Ready to get your time back?</h2>
-    <button class="cta">Start free — no card required</button>
-  </div>
-</div>
-
-<footer>
-  <div>© 2026 TIMEBACK. Proudly Canadian.</div>
-  <div>Toronto · Calgary · Vancouver</div>
-</footer>
-
-<script>
-  const ticks = document.getElementById('ticks');
-  for(let i=0;i<12;i++){
-    const angle = i*30, rad = angle*Math.PI/180;
-    const x1 = 210+70*Math.sin(rad), y1 = 210-70*Math.cos(rad);
-    const x2 = 210+62*Math.sin(rad), y2 = 210-62*Math.cos(rad);
-    const l = document.createElementNS('http://www.w3.org/2000/svg','line');
-    l.setAttribute('x1',x1);l.setAttribute('y1',y1);
-    l.setAttribute('x2',x2);l.setAttribute('y2',y2);
-    l.setAttribute('class','tick');
-    ticks.appendChild(l);
-  }
-
-  const revealEls = document.querySelectorAll('.reveal');
-  if('IntersectionObserver' in window){
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(entry=>{
-        if(entry.isIntersecting){
-          entry.target.classList.add('inview');
-          io.unobserve(entry.target);
+      header {
+        position: sticky;
+        top: env(safe-area-inset-top, 0px);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 6vw;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--line);
+        z-index: 20;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        font-weight: 700;
+        font-size: 1.25rem;
+        letter-spacing: -0.01em;
+      }
+      .leaf {
+        width: 14px;
+        height: 14px;
+        background: var(--red);
+        clip-path: polygon(
+          50% 0%,
+          61% 35%,
+          98% 35%,
+          68% 57%,
+          79% 91%,
+          50% 70%,
+          21% 91%,
+          32% 57%,
+          2% 35%,
+          39% 35%
+        );
+      }
+      nav {
+        display: none;
+        gap: 2.2rem;
+        font-size: 0.92rem;
+        font-weight: 500;
+      }
+      @media (min-width: 760px) {
+        nav {
+          display: flex;
         }
-      });
-    }, {threshold:.15, rootMargin:'0px 0px -8% 0px'});
-    revealEls.forEach(el=>io.observe(el));
-  } else {
-    revealEls.forEach(el=>el.classList.add('inview'));
-  }
-</script>
-</body>
+      }
+      nav a {
+        opacity: 0.7;
+        transition: opacity 0.15s;
+      }
+      nav a:hover {
+        opacity: 1;
+        color: var(--red);
+      }
+      .cta {
+        background: var(--red);
+        color: var(--white);
+        padding: 0.7rem 1.4rem;
+        border: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition:
+          transform 0.15s,
+          background 0.15s;
+      }
+      .cta:hover {
+        background: var(--red-deep);
+        transform: translateY(-1px);
+      }
+
+      .hero {
+        position: relative;
+        overflow: hidden;
+        padding-bottom: 2vh;
+      }
+      .redfield {
+        position: absolute;
+        top: -30vw;
+        right: -22vw;
+        width: 70vw;
+        height: 70vw;
+        border-radius: 50%;
+        background: var(--red);
+        filter: blur(0px);
+      }
+      .ring {
+        position: absolute;
+        border: 1.5px solid rgba(225, 29, 46, 0.35);
+        border-radius: 50%;
+      }
+      .ring1 {
+        top: -8vw;
+        right: -8vw;
+        width: 34vw;
+        height: 34vw;
+      }
+      .ring2 {
+        top: 2vw;
+        right: 6vw;
+        width: 20vw;
+        height: 20vw;
+      }
+
+      .heroinner {
+        position: relative;
+        z-index: 1;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 12vh 6vw 8vh;
+      }
+      .kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: "JetBrains Mono";
+        font-size: 0.78rem;
+        font-weight: 500;
+        color: var(--red);
+        border: 1px solid var(--red);
+        padding: 0.3rem 0.65rem;
+        margin-bottom: 1.6rem;
+      }
+      .kicker::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        background: var(--red);
+        border-radius: 50%;
+        animation: pulse 1.8s ease-in-out infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.25;
+        }
+      }
+
+      h1 {
+        font-weight: 700;
+        font-size: clamp(2.9rem, 8.4vw, 6.4rem);
+        line-height: 0.96;
+        letter-spacing: -0.03em;
+        margin: 0 0 1.6rem;
+        max-width: 14ch;
+      }
+      h1 em {
+        color: var(--red);
+        font-style: normal;
+        position: relative;
+      }
+
+      .sub {
+        font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+        line-height: 1.6;
+        color: #3a332f;
+        max-width: 46ch;
+        margin: 0 0 2.4rem;
+      }
+      .herobtns {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 6vh;
+      }
+      .ghost {
+        padding: 0.7rem 1.4rem;
+        border: 1.5px solid var(--ink);
+        font-weight: 600;
+        font-size: 0.9rem;
+        background: transparent;
+        transition:
+          border-color 0.15s,
+          color 0.15s;
+      }
+      .ghost:hover {
+        border-color: var(--red);
+        color: var(--red);
+      }
+
+      /* orbit visual */
+      .orbitwrap {
+        display: flex;
+        justify-content: center;
+        padding: 2vh 0 0;
+      }
+      svg#orbit {
+        width: min(420px, 88vw);
+        height: auto;
+        overflow: visible;
+        opacity: 0;
+        transform: scale(0.92);
+        animation: orbitIn 0.8s ease-out 0.1s forwards;
+      }
+      @keyframes orbitIn {
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      .orbitring {
+        fill: none;
+        stroke: rgba(21, 16, 15, 0.12);
+        stroke-width: 1.2;
+      }
+      .node {
+        fill: var(--red);
+        filter: drop-shadow(0 0 3px rgba(213, 43, 30, 0.6));
+        animation: nodePulse 2.6s ease-in-out infinite;
+      }
+      .nodeline {
+        stroke: rgba(225, 29, 46, 0.4);
+        stroke-width: 1.2;
+      }
+      .spin-slow {
+        transform-origin: 210px 210px;
+        animation: spin 26s linear infinite;
+      }
+      .spin-slow-rev {
+        transform-origin: 210px 210px;
+        animation: spin 34s linear infinite reverse;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes nodePulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.35;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .spin-slow,
+        .spin-slow-rev,
+        .node {
+          animation: none;
+        }
+        svg#orbit {
+          opacity: 1;
+          transform: none;
+          animation: none;
+        }
+      }
+
+      .facering {
+        fill: none;
+        stroke: var(--ink);
+        stroke-width: 2.5;
+      }
+      .bezel {
+        fill: none;
+        stroke: rgba(213, 43, 30, 0.55);
+        stroke-width: 1.6;
+        stroke-linecap: round;
+        stroke-dasharray: 2 10;
+        transform-origin: 210px 210px;
+        animation: spin 9s linear infinite;
+      }
+      .tick {
+        stroke: var(--ink);
+        stroke-width: 1.4;
+        opacity: 0.55;
+      }
+      .tickbig {
+        stroke: var(--ink);
+        stroke-width: 2.2;
+        opacity: 0.85;
+      }
+      .facenum {
+        font-family: "JetBrains Mono";
+        font-size: 13px;
+        fill: var(--ink);
+        opacity: 0.6;
+        text-anchor: middle;
+        dominant-baseline: middle;
+      }
+      .glass {
+        fill: var(--white);
+        opacity: 0.55;
+        filter: blur(0px);
+      }
+      .sweeparc {
+        fill: none;
+        stroke: var(--red);
+        stroke-width: 3.5;
+        stroke-linecap: round;
+        transform-origin: 210px 210px;
+        filter: drop-shadow(0 0 6px rgba(213, 43, 30, 0.7));
+        animation:
+          rewindHr 2.8s cubic-bezier(0.2, 0.7, 0.2, 1) 1 both,
+          arcFade 2.8s ease-out 1 both;
+      }
+      @keyframes arcFade {
+        0% {
+          opacity: 0;
+        }
+        25% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0.55;
+        }
+      }
+      .hand {
+        stroke: var(--ink);
+        stroke-linecap: round;
+      }
+      .hand-min {
+        stroke-width: 3.4;
+      }
+      .hand-hr {
+        stroke-width: 5;
+      }
+      .pivot {
+        fill: var(--red);
+        filter: drop-shadow(0 0 7px rgba(213, 43, 30, 0.85));
+        animation: pivotPulse 2.4s ease-in-out infinite;
+        animation-delay: 2.8s;
+      }
+      @keyframes pivotPulse {
+        0%,
+        100% {
+          filter: drop-shadow(0 0 7px rgba(213, 43, 30, 0.75));
+        }
+        50% {
+          filter: drop-shadow(0 0 18px rgba(213, 43, 30, 1));
+        }
+      }
+      @keyframes rewindHr {
+        0% {
+          transform: rotate(0deg);
+        }
+        70% {
+          transform: rotate(-330deg);
+        }
+        100% {
+          transform: rotate(-300deg);
+        }
+      }
+      @keyframes rewindMin {
+        0% {
+          transform: rotate(0deg);
+        }
+        70% {
+          transform: rotate(-760deg);
+        }
+        100% {
+          transform: rotate(-720deg);
+        }
+      }
+      .hand-hr {
+        transform-origin: 210px 210px;
+        animation: rewindHr 2.8s cubic-bezier(0.2, 0.7, 0.2, 1) 1 both;
+      }
+      .hand-min {
+        transform-origin: 210px 210px;
+        animation: rewindMin 2.8s cubic-bezier(0.2, 0.7, 0.2, 1) 1 both;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .hand-hr,
+        .hand-min,
+        .pivot,
+        .sweeparc {
+          animation: none;
+        }
+        .sweeparc {
+          opacity: 0.4;
+        }
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        max-width: 1280px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+        background: var(--white);
+      }
+      .stat {
+        padding: 2.6rem 5vw;
+        border-left: 1px solid var(--line);
+      }
+      .stat:first-child {
+        border-left: none;
+      }
+      .stat b {
+        display: block;
+        font-family: "JetBrains Mono";
+        font-weight: 600;
+        font-size: clamp(1.9rem, 3.6vw, 2.6rem);
+        color: var(--red);
+        line-height: 1;
+        margin-bottom: 0.4rem;
+      }
+      .stat span {
+        font-size: 0.88rem;
+        color: #555;
+      }
+
+      section.how {
+        padding: 10vh 6vw;
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+      .how .tag {
+        font-family: "JetBrains Mono";
+        font-size: 0.78rem;
+        color: var(--red);
+        margin-bottom: 0.8rem;
+      }
+      .how h2 {
+        font-weight: 700;
+        font-size: clamp(2.1rem, 4.6vw, 3rem);
+        margin: 0 0 3.5rem;
+        max-width: 16ch;
+        letter-spacing: -0.02em;
+      }
+      .steps {
+        display: grid;
+        gap: 0;
+        border-top: 1px solid var(--line);
+      }
+      @media (min-width: 760px) {
+        .steps {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .step {
+        padding: 1.8rem 1.8rem 1.8rem 0;
+        border-bottom: 1px solid var(--line);
+      }
+      @media (min-width: 760px) {
+        .step {
+          border-right: 1px solid var(--line);
+          border-bottom: none;
+          padding: 1.8rem;
+        }
+        .step:last-child {
+          border-right: none;
+        }
+      }
+      .step .idx {
+        font-family: "JetBrains Mono";
+        font-size: 0.78rem;
+        color: var(--red);
+        margin-bottom: 0.8rem;
+        display: block;
+      }
+      .step h3 {
+        font-size: 1.15rem;
+        margin: 0 0 0.5rem;
+        font-weight: 600;
+      }
+      .step p {
+        font-size: 0.93rem;
+        color: #4a4a4a;
+        line-height: 1.6;
+        margin: 0;
+      }
+
+      section.offers {
+        padding: 0 6vw 10vh;
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+      .offers .tag {
+        font-family: "JetBrains Mono";
+        font-size: 0.78rem;
+        color: var(--red);
+        margin-bottom: 0.8rem;
+      }
+      .offers h2 {
+        font-weight: 700;
+        font-size: clamp(2.1rem, 4.6vw, 3rem);
+        margin: 0 0 3.5rem;
+        max-width: 20ch;
+        letter-spacing: -0.02em;
+      }
+      .offergrid {
+        display: grid;
+        gap: 1px;
+        background: var(--line);
+        border: 1px solid var(--line);
+      }
+      @media (min-width: 760px) {
+        .offergrid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .offercard {
+        background: var(--white);
+        padding: 2rem 1.8rem;
+      }
+      .offercard h3 {
+        font-size: 1.15rem;
+        margin: 0 0 0.6rem;
+        font-weight: 600;
+      }
+      .offercard p {
+        font-size: 0.93rem;
+        color: #4a4a4a;
+        line-height: 1.6;
+        margin: 0;
+      }
+      .offercard .mark {
+        width: 9px;
+        height: 9px;
+        background: var(--red);
+        margin-bottom: 1.1rem;
+      }
+      .offercard.assess {
+        grid-column: 1 / -1;
+        background: var(--ink);
+        color: var(--white);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.2rem;
+        padding: 2rem 1.8rem;
+      }
+      .offercard.assess p {
+        color: #c9c9c9;
+        max-width: 44ch;
+      }
+      .offercard.assess .cta {
+        background: var(--red);
+        flex-shrink: 0;
+      }
+      .offercard.assess .cta:hover {
+        background: var(--red-deep);
+      }
+
+      section.pricing {
+        padding: 0 6vw 11vh;
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+      .pricing .tag {
+        font-family: "JetBrains Mono";
+        font-size: 0.78rem;
+        color: var(--red);
+        margin-bottom: 0.8rem;
+      }
+      .pricing h2 {
+        font-weight: 700;
+        font-size: clamp(2.1rem, 4.6vw, 3rem);
+        margin: 0 0 1rem;
+        max-width: 16ch;
+        letter-spacing: -0.02em;
+      }
+      .pricing .note {
+        font-size: 0.98rem;
+        color: #5a5a5a;
+        max-width: 52ch;
+        margin: 0 0 3rem;
+        line-height: 1.6;
+      }
+      .pricelist {
+        border-top: 1px solid var(--line);
+      }
+      .price-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 1.5rem;
+        padding: 1.4rem 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .price-row .plabel {
+        font-weight: 500;
+        font-size: 1rem;
+      }
+      .price-row .pdesc {
+        font-size: 0.85rem;
+        color: #777;
+        margin-top: 0.2rem;
+      }
+      .price-row .pval {
+        font-family: "JetBrains Mono";
+        font-weight: 600;
+        color: var(--red);
+        font-size: 1.05rem;
+        white-space: nowrap;
+        text-align: right;
+      }
+
+      .banner {
+        background: var(--ink);
+        color: var(--white);
+        padding: 7vh 6vw;
+        position: relative;
+        overflow: hidden;
+      }
+      .banner::before {
+        content: "";
+        position: absolute;
+        top: -20vw;
+        left: -14vw;
+        width: 40vw;
+        height: 40vw;
+        border-radius: 50%;
+        background: var(--red);
+        opacity: 0.9;
+      }
+      .banner .inner {
+        position: relative;
+        z-index: 1;
+        max-width: 1280px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.6rem;
+      }
+      .banner h2 {
+        font-weight: 700;
+        font-size: clamp(1.9rem, 4vw, 2.5rem);
+        margin: 0;
+        max-width: 20ch;
+        letter-spacing: -0.02em;
+      }
+      .banner .cta {
+        background: var(--white);
+        color: var(--red);
+      }
+      .banner .cta:hover {
+        background: #f4f4f4;
+      }
+
+      section.booking {
+        padding: 10vh 6vw;
+        max-width: 1280px;
+        margin: 0 auto;
+        scroll-margin-top: 90px;
+      }
+      .booking .tag {
+        font-family: "JetBrains Mono";
+        font-size: 0.78rem;
+        color: var(--red);
+        margin-bottom: 0.8rem;
+      }
+      .booking h2 {
+        font-weight: 700;
+        font-size: clamp(2.1rem, 4.6vw, 3rem);
+        letter-spacing: -0.02em;
+        margin: 0 0 1rem;
+      }
+      .booking p {
+        max-width: 56ch;
+        color: #4a4a4a;
+        line-height: 1.65;
+        margin: 0 0 1.6rem;
+      }
+      .booking-panel {
+        border: 1px solid var(--line);
+        padding: clamp(1.5rem, 4vw, 3rem);
+        background: #faf8f7;
+      }
+      .booking-panel h3 {
+        font-size: 1.35rem;
+        margin: 0 0 0.6rem;
+      }
+      .booking-panel .booking-status {
+        font-size: 0.9rem;
+        margin: 1rem 0 0;
+        color: #666;
+      }
+      .booking-panel .cta[hidden] {
+        display: none;
+      }
+
+      footer {
+        padding: 2.2rem 6vw;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 1rem;
+        font-family: "JetBrains Mono";
+        font-size: 0.8rem;
+        color: #666;
+        border-top: 1px solid var(--line);
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(26px);
+        transition:
+          opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+          transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+      .reveal.inview {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .stats .stat:nth-child(1) {
+        transition-delay: 0s;
+      }
+      .stats .stat:nth-child(2) {
+        transition-delay: 0.1s;
+      }
+      .stats .stat:nth-child(3) {
+        transition-delay: 0.2s;
+      }
+      .steps .step:nth-child(1) {
+        transition-delay: 0s;
+      }
+      .steps .step:nth-child(2) {
+        transition-delay: 0.12s;
+      }
+      .steps .step:nth-child(3) {
+        transition-delay: 0.24s;
+      }
+      .offergrid .offercard:nth-child(1) {
+        transition-delay: 0s;
+      }
+      .offergrid .offercard:nth-child(2) {
+        transition-delay: 0.1s;
+      }
+      .offergrid .offercard:nth-child(3) {
+        transition-delay: 0.2s;
+      }
+      .offergrid .offercard.assess {
+        transition-delay: 0.3s;
+      }
+      .pricelist .price-row:nth-child(1) {
+        transition-delay: 0s;
+      }
+      .pricelist .price-row:nth-child(2) {
+        transition-delay: 0.06s;
+      }
+      .pricelist .price-row:nth-child(3) {
+        transition-delay: 0.12s;
+      }
+      .pricelist .price-row:nth-child(4) {
+        transition-delay: 0.18s;
+      }
+      .pricelist .price-row:nth-child(5) {
+        transition-delay: 0.24s;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .reveal {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo"><span class="leaf"></span>TIMEBACK</div>
+      <nav>
+        <a href="#how">How it works</a><a href="#pricing">Pricing</a
+        ><a href="#book">Book a call</a>
+      </nav>
+      <a class="cta" href="#book">Get started</a>
+    </header>
+
+    <section class="hero">
+      <div class="redfield"></div>
+      <div class="ring ring1"></div>
+      <div class="ring ring2"></div>
+      <div class="heroinner">
+        <h1>Give your business <em>time back.</em></h1>
+        <p class="sub">
+          We build AI-powered automations that give small businesses their time
+          back — so your team spends less time on admin and more time on what
+          actually moves things forward.
+        </p>
+        <div class="herobtns">
+          <a class="cta" href="#book">Get started</a>
+          <a class="ghost" href="#how">See how it works</a>
+        </div>
+
+        <div class="orbitwrap">
+          <svg id="orbit" viewBox="0 0 420 420">
+            <circle class="orbitring" cx="210" cy="210" r="180" />
+            <circle class="orbitring" cx="210" cy="210" r="130" />
+            <g class="spin-slow">
+              <circle
+                class="node"
+                cx="210"
+                cy="30"
+                r="5"
+                style="animation-delay: 0.2s"
+              />
+              <circle
+                class="node"
+                cx="210"
+                cy="390"
+                r="4"
+                style="animation-delay: 1s"
+              />
+              <line class="nodeline" x1="210" y1="30" x2="210" y2="80" />
+            </g>
+            <g class="spin-slow-rev">
+              <circle
+                class="node"
+                cx="80"
+                cy="210"
+                r="4"
+                style="animation-delay: 0.6s"
+              />
+              <circle
+                class="node"
+                cx="340"
+                cy="210"
+                r="4.5"
+                style="animation-delay: 1.4s"
+              />
+            </g>
+            <circle class="facering" cx="210" cy="210" r="78" />
+            <circle
+              class="sweeparc"
+              cx="210"
+              cy="210"
+              r="94"
+              stroke-dasharray="492 590"
+            />
+            <g id="ticks"></g>
+            <line class="hand hand-min" x1="210" y1="210" x2="210" y2="148" />
+            <line class="hand hand-hr" x1="210" y1="210" x2="210" y2="168" />
+            <circle class="pivot" cx="210" cy="210" r="5.5" />
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <div id="stats" class="stats">
+      <div class="stat reveal">
+        <b>11.4</b><span>hours saved weekly, on average</span>
+      </div>
+      <div class="stat reveal">
+        <b>60s</b><span>to connect your first workflow</span>
+      </div>
+      <div class="stat reveal">
+        <b>100%</b><span>Canadian-hosted &amp; supported</span>
+      </div>
+    </div>
+
+    <section class="how" id="how">
+      <div class="tag">// how it works</div>
+      <h2>Less admin. More of what matters.</h2>
+      <div class="steps">
+        <div class="step reveal">
+          <span class="idx">01</span>
+          <h3>Connect your tools</h3>
+          <p>
+            Link the apps you already use for invoicing, scheduling, and
+            customer records — no rebuild required.
+          </p>
+        </div>
+        <div class="step reveal">
+          <span class="idx">02</span>
+          <h3>Let AI handle the repeats</h3>
+          <p>
+            Set the rules once. Our automations handle the follow-ups,
+            reminders, and paperwork from there on.
+          </p>
+        </div>
+        <div class="step reveal">
+          <span class="idx">03</span>
+          <h3>Get your hours back</h3>
+          <p>
+            See exactly how much time you've reclaimed each week, and put it
+            toward growing the business.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="offers">
+      <div class="tag">// what we build</div>
+      <h2>Three ways we take work off your plate.</h2>
+      <div class="offergrid">
+        <div class="offercard reveal">
+          <div class="mark"></div>
+          <h3>Workflow Automation</h3>
+          <p>
+            Automate repetitive processes across the tools your business already
+            uses.
+          </p>
+        </div>
+        <div class="offercard reveal">
+          <div class="mark"></div>
+          <h3>Document Intelligence</h3>
+          <p>
+            Extract, organize, and process information from documents
+            automatically using AI.
+          </p>
+        </div>
+        <div class="offercard reveal">
+          <div class="mark"></div>
+          <h3>Intelligent Intake</h3>
+          <p>
+            Automatically process emails, forms, and customer requests, and
+            route them into the right workflow.
+          </p>
+        </div>
+        <div class="offercard assess reveal">
+          <div>
+            <h3>Not sure where to start?</h3>
+            <p>
+              Our Automation Assessment analyzes your workflows and identifies
+              the highest-value opportunities for automation.
+            </p>
+          </div>
+          <a class="cta" href="#book">Book a free assessment</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+      <div class="tag">// pricing</div>
+      <h2>Simple, honest pricing.</h2>
+      <p class="note">
+        No packages to decode. We scope the work, tell you what it costs, and go
+        from there.
+      </p>
+      <div class="pricelist">
+        <div class="price-row reveal">
+          <div>
+            <div class="plabel">Automation Assessment</div>
+            <div class="pdesc">
+              A working session to map your best opportunities
+            </div>
+          </div>
+          <div class="pval">Free</div>
+        </div>
+        <div class="price-row reveal">
+          <div>
+            <div class="plabel">Simple workflow</div>
+            <div class="pdesc">A single automated process, start to finish</div>
+          </div>
+          <div class="pval">$250–500</div>
+        </div>
+        <div class="price-row reveal">
+          <div>
+            <div class="plabel">AI / document workflow</div>
+            <div class="pdesc">
+              Document intelligence or intake, built and tested
+            </div>
+          </div>
+          <div class="pval">$500–1,000</div>
+        </div>
+        <div class="price-row reveal">
+          <div>
+            <div class="plabel">Larger / custom workflow</div>
+            <div class="pdesc">Multi-step or multi-system automations</div>
+          </div>
+          <div class="pval">Custom quote</div>
+        </div>
+        <div class="price-row reveal">
+          <div>
+            <div class="plabel">Ongoing monitoring &amp; support</div>
+            <div class="pdesc">We keep it running so you don't have to</div>
+          </div>
+          <div class="pval">$50–150/mo</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="booking" id="book" aria-labelledby="booking-heading">
+      <div class="tag">// let's talk</div>
+      <h2 id="booking-heading">Book your free assessment.</h2>
+      <p>
+        Choose a time that works for you. We'll talk through the work taking up
+        your team's time and where automation could help.
+      </p>
+      <div class="booking-panel">
+        <h3>Free discovery call</h3>
+        <p>
+          Pick an available time through Google Calendar. You'll receive a
+          confirmation and meeting details when you book.
+        </p>
+        <a
+          class="cta"
+          id="booking-link"
+          href="https://calendar.app.google/zg46z8z6ijz5B5QP8"
+          target="_blank"
+          rel="noopener noreferrer"
+          >See available times ↗</a
+        >
+      </div>
+    </section>
+
+    <div class="banner">
+      <div class="inner">
+        <h2 class="reveal">Ready to get your time back?</h2>
+        <a class="cta" href="#book">Book a free call</a>
+      </div>
+    </div>
+
+    <footer>
+      <div>© 2026 TIMEBACK. Proudly Canadian.</div>
+      <div>Toronto · Calgary · Vancouver</div>
+    </footer>
+
+    <script>
+      const ticks = document.getElementById("ticks");
+      for (let i = 0; i < 12; i++) {
+        const angle = i * 30,
+          rad = (angle * Math.PI) / 180;
+        const x1 = 210 + 70 * Math.sin(rad),
+          y1 = 210 - 70 * Math.cos(rad);
+        const x2 = 210 + 62 * Math.sin(rad),
+          y2 = 210 - 62 * Math.cos(rad);
+        const l = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "line",
+        );
+        l.setAttribute("x1", x1);
+        l.setAttribute("y1", y1);
+        l.setAttribute("x2", x2);
+        l.setAttribute("y2", y2);
+        l.setAttribute("class", "tick");
+        ticks.appendChild(l);
+      }
+
+      const revealEls = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("inview");
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.15, rootMargin: "0px 0px -8% 0px" },
+        );
+        revealEls.forEach((el) => io.observe(el));
+      } else {
+        revealEls.forEach((el) => el.classList.add("inview"));
+      }
+    </script>
+  </body>
 </html>
